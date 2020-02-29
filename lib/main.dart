@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:myapp/view/dropdown_list.dart';
 import 'package:myapp/view/sample_datepicker.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +36,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final _widget = MyWidgetList();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MyState>(
@@ -50,15 +52,21 @@ class _MyHomePageState extends State<MyHomePage> {
             // child: VariableLengthCard()
             // child: MyListWidget(ListViewWidgetProvider())
             // child: TextWithDatePicker(DatePickerProvider())
-            child: DateTextFieldListView(provider),
+            // child: DateTextFieldListView(provider),
+            child: _widget,
             //BodyWidget()
           ),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.plus_one),
             onPressed: () {
-              print("要素数 => ${provider.items.length}");
-              provider.items.asMap().forEach((key, value) {
-                print("要素${key + 1} => ${value.controller.text}");
+              // print("要素数 => ${provider.items.length}");
+              // provider.items.asMap().forEach(
+              //   (key, value) {
+              //     print("要素${key + 1} => ${value.controller.text}");
+              //   },
+              // );
+              _widget.items.forEach((element) {
+                print("${element.provider.selected}");
               });
             },
           ),

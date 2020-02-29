@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import 'dropdown_list.dart';
+
 /// 今日日付を基準としたDatePickerを呼び出すstaticクラス
 class CommonDatepicker {
   static Future<DateTime> showCommonDatePicker(BuildContext context) async {
@@ -37,6 +39,7 @@ class DatePickerProvider with ChangeNotifier {
 class TextWithDatePicker extends StatelessWidget {
   final format = DateFormat("yyyy年MM月dd日");
   final TextEditingController _controller = TextEditingController();
+
   TextEditingController get controller => _controller;
 
   @override
@@ -50,21 +53,28 @@ class TextWithDatePicker extends StatelessWidget {
         create: (_) => DatePickerProvider(),
         child: Consumer<DatePickerProvider>(
           builder: (_, provider, __) => Container(
-              child: DateTimeField(
-            decoration: InputDecoration(
-                contentPadding:
-                    EdgeInsets.only(top: 10.0, bottom: 10.0, left: 20.0),
-                border: InputBorder.none,
-                hintText: "年/月/日"),
-            format: format,
-            onShowPicker: (context, value) {
-              return CommonDatepicker.showCommonDatePicker(context);
-            },
-            controller: _controller,
-            onChanged: (value) {
-              // provider
-            },
-          )),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: DateTimeField(
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                            top: 10.0, bottom: 10.0, left: 20.0),
+                        border: InputBorder.none,
+                        hintText: "年/月/日"),
+                    format: format,
+                    onShowPicker: (context, value) {
+                      return CommonDatepicker.showCommonDatePicker(context);
+                    },
+                    controller: _controller,
+                    onChanged: (value) {
+                      // provider
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -120,10 +130,8 @@ class DateTextFieldListView extends StatelessWidget {
                         style: BorderStyle.solid)),
                 child: FlatButton(
                   color: Colors.white,
-                  child: Text(
-                    "次へ",
-                    style: TextStyle(color: Colors.green, fontSize: 18.0),
-                  ),
+                  child: Text("次へ",
+                      style: TextStyle(color: Colors.green, fontSize: 18.0)),
                   onPressed: () {
                     print("${DateTime.now()}");
                   },
